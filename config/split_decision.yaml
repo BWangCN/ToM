@@ -1,0 +1,46 @@
+# Split Decision arena + ToM PoC config
+
+simulation:
+  headless: true
+  physics_hz: 60
+  render_hz: 30
+  episode_max_steps: 1200          # 20s @ 60Hz
+
+arena:
+  size_x: 24.0
+  size_y: 24.0
+  goal_a_pos: [-8.0, 20.0]
+  goal_b_pos: [8.0, 20.0]
+  goal_radius: 2.0
+  block_radius: 3.0
+
+agents:
+  evader:
+    asset: "jetbot"                # jetbot | carter | kaya
+    start_pos: [0.0, 2.0]
+    start_heading_deg: 90.0        # facing +Y
+    max_speed: 2.0
+    max_omega: 2.5                 # rad/s, higher = more agile
+  defender:
+    asset: "jetbot"
+    start_pos: [0.0, 14.0]
+    start_heading_deg: -90.0       # facing evader (-Y)
+    max_speed: 2.5
+    max_omega: 1.2                 # slower turning => commitment cost
+
+topdown_camera:
+  height: 30.0                     # meters above arena
+  resolution: [512, 512]
+  orthographic_size: 14.0          # half-width in meters
+  save_dir: "logs/frames"
+
+tom:
+  reason_interval_sec: 0.8         # strategy-layer frequency (~1.25 Hz)
+  perspectives: ["evader", "defender"]
+  vlm_backend: "openai"            # openai | qwen
+  vlm_model: "gpt-4o"
+  log_dir: "logs/tom"
+
+controller:
+  mode: "rule_based"               # rule_based | rl_policy | vlm_direct
+  control_hz: 20                   # high-level commands resampled at this rate

@@ -1,0 +1,10 @@
+# Inside the Isaac Sim 5.1 conda env (env_isaacsim), only these extra packages
+# are needed on top of what Isaac Sim + Isaac Lab already install.
+openai>=1.40.0
+pyyaml>=6.0
+pillow>=10.0
+matplotlib>=3.8
+# Qwen2-VL backend (uncomment when switching off OpenAI):
+# transformers>=4.45
+# accelerate
+# qwen-vl-utils

@@ -1,0 +1,128 @@
+##
+# Custom kit experience for IsaacToM: headless RTX rendering via Replicator
+# render products, WITHOUT the omni.kit.viewport.* widget stack (which
+# segfaults in __enable_hydra_engine on hybrid-GPU Windows).
+#
+# Philosophy: the viewport widget is only needed to display a window on screen.
+# In headless mode we draw to off-screen render products, so replicator +
+# omni.hydra.rtx is sufficient.
+##
+
+[package]
+title = "IsaacToM Headless Camera"
+description = "Headless rendering for IsaacToM (no viewport widget)"
+version = "0.1.0"
+keywords = ["experience", "app", "isaaclab", "python", "headless", "camera"]
+
+[dependencies]
+# Start from the pure headless (no rendering) isaaclab kit — it pulls in
+# physics, core api, warp, fabric, etc. without any viewport extensions.
+"isaaclab.python.headless" = {}
+
+# simulation_app imports omni.kit.usd.layers at boot — declare it explicitly
+# since isaacsim.simulation_app's extension.toml only depends on plain omni.usd.
+"omni.kit.usd.layers" = {}
+
+# Rendering pipeline: viewport-rtx registers the RTX hydra engine with the
+# viewport subsystem (required for render_product NEW_FRAME events to fire).
+# We prevent the actual ViewportWindow widget from appearing via
+# `disableWindowOnLoad = true` below, which avoids the hybrid-GPU segfault.
+"omni.kit.viewport.rtx" = {}
+"omni.replicator.core" = {}
+"omni.syntheticdata" = {}
+"omni.kit.material.library" = {}
+
+# Isaac Sim Camera class (convenience wrapper around render_product).
+"isaacsim.sensors.camera" = {}
+
+[settings.isaaclab]
+cameras_enabled = true
+
+[settings]
+### FSD
+app.useFabricSceneDelegate = true
+rtx.hydra.readTransformsFromFabricInRenderDelegate = true
+
+# Silence noisy logs.
+app.enableStdoutOutput = false
+
+# Force single-GPU to avoid MGPU init paths on hybrid Intel+NVIDIA laptops.
+renderer.multiGpu.enabled = false
+renderer.multiGpu.autoEnable = false
+renderer.multiGpu.maxGpuCount = 1
+
+# Rendering-for-RL flags (copied from isaaclab.python.headless.rendering.kit).
+rtx.translucency.enabled = false
+rtx.reflections.enabled = false
+rtx.indirectDiffuse.enabled = false
+rtx-transient.dlssg.enabled = false
+rtx.directLighting.sampledLighting.enabled = true
+rtx.directLighting.sampledLighting.samplesPerPixel = 1
+rtx.sceneDb.ambientLightIntensity = 1.0
+rtx.pathtracing.maxSamplesPerLaunch = 1000000
+rtx.viewTile.limit = 1000000
+rtx.raytracing.cached.enabled = false
+rtx.ambientOcclusion.enabled = false
+rtx.post.dlss.execMode = 0
+
+# Disable present thread (no display) + misc perf flags.
+exts."omni.renderer.core".present.enabled = false
+omni.replicator.asyncRendering = false
+app.updateOrder.checkForHydraRenderComplete = 1000
+app.renderer.waitIdle = true
+app.hydraEngine.waitIdle = true
+app.audio.enabled = false
+app.vulkan = true
+
+# Replicator orchestrator OFF — Isaac Lab's working headless.rendering.kit
+# disables it for perf, and render products are driven by app.update() ticks
+# once viewport-rtx has registered the RTX hydra engine.
+exts."omni.replicator.core".Orchestrator.enabled = false
+metricsAssembler.changeListenerEnabled = false
+
+# Use RTX renderer (not pxr/storm).
+renderer.enabled = "rtx"
+
+# CRITICAL: do not create the default ViewportWindow on extension load.
+# The default viewport widget's stage-opened callback tries to init the RTX
+# hydra engine from Python, which segfaults on hybrid-GPU Windows. Replicator's
+# render_product path renders off-screen and doesn't need this window.
+exts."omni.kit.viewport.window".startup.disableWindowOnLoad = true
+exts."omni.kit.viewport.window".windowMenu.entryCount = 0
+
+# Avoid replicator._resize_data_for_overscan crash when dataWindowNDC is
+# uninitialised: make the renderer fit output to data window so the resize
+# branch is skipped entirely.
+rtx.dataWindow.fitOutputToDataWindow = true
+
+[settings.app.python]
+interceptSysStdOutput = false
+logSysStdOutput = false
+
+[settings.app.renderer]
+skipWhileMinimized = false
+sleepMsOnFocus = 0
+sleepMsOutOfFocus = 0
+
+# Extension search paths (mirrors isaaclab.python.headless.kit so our
+# extra deps like omni.kit.usd.layers / omni.hydra.rtx / etc. resolve).
+[settings.app.exts]
+folders = [
+    "${exe-path}/exts",
+    "${exe-path}/extscore",
+    "${exe-path}/../exts",
+    "${exe-path}/../extsDeprecated",
+    "${exe-path}/../extscache",
+    "${exe-path}/../extsPhysics",
+    "${exe-path}/../isaacsim/exts",
+    "${exe-path}/../isaacsim/extsDeprecated",
+    "${exe-path}/../isaacsim/extscache",
+    "${exe-path}/../isaacsim/extsPhysics",
+    "${app}",
+    "${app}/../source",
+]
+
+[settings]
+persistent.isaac.asset_root.default = "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.0"
+persistent.isaac.asset_root.cloud = "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.0"
+persistent.isaac.asset_root.nvidia = "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/5.0"
