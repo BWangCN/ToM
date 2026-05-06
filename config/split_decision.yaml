@@ -37,8 +37,8 @@ topdown_camera:
 tom:
   reason_interval_sec: 0.8         # strategy-layer frequency (~1.25 Hz)
   perspectives: ["evader", "defender"]
-  vlm_backend: "openai"            # openai | qwen
-  vlm_model: "gpt-4o"
+  vlm_backend: "qwen"            # openai | qwen
+  vlm_model: "qwen3-vl:32b"
   log_dir: "logs/tom"
   # output_mode controls the third VLM query after L1+L2:
   #   tactic   -> pick a label from a fixed vocabulary (legacy, head-on tendency)
