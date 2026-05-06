@@ -19,12 +19,9 @@ Thumbs.db
 smoke_*.py
 smoke*.log
 
-# Run outputs
+# Run outputs — ignore everything under logs/ (frames, jsonl, mp4, subdirs)
 run.log
-logs/frames/
-logs/*.jsonl
-logs/*.png
-logs/concat.txt
+logs/
 
 # Generated demo
 split_decision_demo.mp4

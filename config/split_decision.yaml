@@ -40,6 +40,12 @@ tom:
   vlm_backend: "openai"            # openai | qwen
   vlm_model: "gpt-4o"
   log_dir: "logs/tom"
+  # output_mode controls the third VLM query after L1+L2:
+  #   tactic   -> pick a label from a fixed vocabulary (legacy, head-on tendency)
+  #   waypoint -> emit a free (x, y) target in world frame; rule_based.py drives
+  #               toward it via heading-P and re-queries every reason_interval_sec.
+  output_mode: "waypoint"
+  waypoint_max_horizon: 6.0        # meters — clamp distance from agent
 
 controller:
   mode: "rule_based"               # rule_based | rl_policy | vlm_direct

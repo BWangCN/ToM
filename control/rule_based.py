@@ -25,9 +25,11 @@ def _wrap(a: float) -> float:
 
 class RuleBasedController(BaseController):
     EVADER_TACTICS = {"go_straight", "shape_toward_A", "shape_toward_B",
-                      "exploit_swerve_A", "exploit_swerve_B", "slow_observe"}
+                      "exploit_swerve_A", "exploit_swerve_B", "slow_observe",
+                      "goto_waypoint"}
     DEFENDER_TACTICS = {"wait_center", "track_evader",
-                        "commit_A", "commit_B", "hedge"}
+                        "commit_A", "commit_B", "hedge",
+                        "goto_waypoint"}
 
     def __init__(self, role, cfg):
         super().__init__(role, cfg)
@@ -40,7 +42,20 @@ class RuleBasedController(BaseController):
         self_xy = np.asarray(self_state["pos_xy"])
         heading = self_state["heading_rad"]
 
-        if self.role == "evader":
+        if tactic.label == "goto_waypoint" and tactic.waypoint is not None:
+            # Pure go-to-point: heading-P toward an arbitrary world-frame target.
+            # No path planning, no obstacle avoidance — that comes from Nav2.
+            # When the waypoint comes from the VLM (output_mode=waypoint), the
+            # strategy layer also supplies a speed_frac in tactic.extra so it
+            # can choose to slow down for observation. User-issued goto cmds
+            # don't set this and just cruise at full speed.
+            target_xy = np.asarray(tactic.waypoint, dtype=np.float32)
+            dist = float(np.linalg.norm(target_xy - self_xy))
+            if dist < 0.3:
+                speed_frac = 0.0
+            else:
+                speed_frac = float(tactic.extra.get("speed_frac", 1.0))
+        elif self.role == "evader":
             target_xy, speed_frac = self._evader_target(tactic, self_xy, goals)
         else:
             target_xy, speed_frac = self._defender_target(tactic, self_xy,

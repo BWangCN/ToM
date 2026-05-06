@@ -38,13 +38,34 @@ class TopDownCamera:
         self._fig, self._ax = plt.subplots(figsize=(fig_w, fig_h), dpi=dpi)
         self._latest_state: Optional[dict] = None
         self._latest_rgb: Optional[np.ndarray] = None
+        self._latest_tactics: Optional[dict] = None
+        # Cumulative position history per agent — drawn as a fading polyline
+        # so the viewer can see the *shape* of the trajectory (e.g. an S-curve
+        # feint) without having to scrub through frames.
+        self._trails: dict = {"evader": [], "defender": []}
+        self._trail_stride = 4  # only sample every Nth update to keep it light
 
     def initialize(self):
         return
 
-    def update_state(self, state: dict):
-        """Cache the latest physics state for the next render."""
+    def update_state(self, state: dict, tactics: Optional[dict] = None):
+        """Cache the latest physics state (and optionally per-role tactics, so
+        the renderer can overlay current waypoints)."""
         self._latest_state = state
+        if tactics is not None:
+            self._latest_tactics = tactics
+        # Append to trails every Nth update_state call. Track sample count on
+        # the camera (not via len(buf), which doesn't grow if we ever stop
+        # appending — that was a real bug).
+        self._trail_count = getattr(self, "_trail_count", 0) + 1
+        if self._trail_count % self._trail_stride == 0:
+            for role in ("evader", "defender"):
+                agent = state.get(role)
+                if agent is None:
+                    continue
+                self._trails[role].append(tuple(agent["pos_xy"]))
+                if len(self._trails[role]) > 2000:
+                    self._trails[role] = self._trails[role][-1500:]
         self._latest_rgb = None  # invalidate render cache
 
     def _render(self, state: dict) -> np.ndarray:
@@ -75,10 +96,33 @@ class TopDownCamera:
         ax.text(goal_b[0], goal_b[1], "B", ha="center", va="center",
                 color="white", fontsize=16, fontweight="bold", zorder=2)
 
+        # Trails first so agents draw on top of them.
+        for role, color in (("evader", "#81c784"), ("defender", "#e57373")):
+            tr = self._trails.get(role) or []
+            if len(tr) > 1:
+                arr = np.asarray(tr)
+                ax.plot(arr[:, 0], arr[:, 1], color=color, alpha=0.5,
+                        linewidth=1.5, zorder=2)
+
         for role, color in (("evader", "#81c784"), ("defender", "#e57373")):
             s = state[role]
             x, y = s["pos_xy"]
             yaw = s["heading_rad"]
+
+            # Optional waypoint overlay — × marker + dotted line from agent.
+            tac = (self._latest_tactics or {}).get(role)
+            if tac is not None and getattr(tac, "label", None) == "goto_waypoint" \
+                    and getattr(tac, "waypoint", None) is not None:
+                wx, wy = tac.waypoint
+                ax.plot([x, wx], [y, wy], color=color, alpha=0.5,
+                        linewidth=1.0, linestyle=":", zorder=2)
+                ax.plot(wx, wy, marker="x", color=color,
+                        markersize=10, mew=2.0, zorder=4)
+                if (tac.extra or {}).get("clamped_horizon"):
+                    ax.plot(wx, wy, marker="o", color=color,
+                            markersize=13, fillstyle="none", mew=1.0,
+                            alpha=0.6, zorder=4)
+
             ax.add_patch(self._plt.Circle((x, y), 0.5, color=color, zorder=3))
             dx, dy = 1.2 * math.cos(yaw), 1.2 * math.sin(yaw)
             ax.annotate(
@@ -89,9 +133,25 @@ class TopDownCamera:
             ax.text(x + 0.7, y + 0.7, role[0].upper(),
                     color=color, fontsize=11, fontweight="bold", zorder=4)
 
-        ax.text(0.02, 0.97, f"t={state['t_sim']:.2f}s",
-                transform=ax.transAxes, color="#cccccc", fontsize=9,
-                va="top", ha="left")
+        # Status header (top-right) — shows phase + clamped target per role.
+        lines = [f"t={state['t_sim']:.2f}s"]
+        for role in ("evader", "defender"):
+            tac = (self._latest_tactics or {}).get(role)
+            if tac is None:
+                continue
+            phase = (tac.extra or {}).get("phase") if hasattr(tac, "extra") else None
+            tag = "E" if role == "evader" else "D"
+            if tac.label == "goto_waypoint" and tac.waypoint is not None:
+                wx, wy = tac.waypoint
+                sf = (tac.extra or {}).get("speed_frac", 1.0) if hasattr(tac, "extra") else 1.0
+                lines.append(f"{tag}:{phase or tac.label:11s}->({wx:+5.2f},{wy:+5.2f}) v={sf:.2f}")
+            else:
+                lines.append(f"{tag}:{tac.label}")
+        ax.text(0.98, 0.97, "\n".join(lines),
+                transform=ax.transAxes, color="#dddddd", fontsize=8,
+                family="monospace", va="top", ha="right",
+                bbox=dict(facecolor="#000000aa", edgecolor="none",
+                          boxstyle="round,pad=0.3"))
 
         self._fig.canvas.draw()
         w, h = self._fig.canvas.get_width_height()
