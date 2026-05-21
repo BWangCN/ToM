@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Editor / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Local secrets
+.env
+*.env
+
+# Smoke-test scratch files (kept locally for debugging; not part of the repo)
+smoke_*.py
+smoke*.log
+
+# Run outputs — ignore everything under logs/ (frames, jsonl, mp4, subdirs)
+run.log
+logs/
+
+# Generated demo
+split_decision_demo.mp4
+*.mp4

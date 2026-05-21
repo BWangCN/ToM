@@ -8,6 +8,7 @@ venv/
 # Editor / OS
 .idea/
 .vscode/
+.claude/
 .DS_Store
 Thumbs.db
 
@@ -15,14 +16,53 @@ Thumbs.db
 .env
 *.env
 
-# Smoke-test scratch files (kept locally for debugging; not part of the repo)
-smoke_*.py
-smoke*.log
+# AR-LLMs is an unrelated parallel project — not tracked here
+AR-LLMs/
 
-# Run outputs — ignore everything under logs/ (frames, jsonl, mp4, subdirs)
-run.log
-logs/
+# ============================================================================
+# Curate logs/runs/: ignore everything under it by default, then un-ignore
+# specific representative artifacts only.
+# ============================================================================
 
-# Generated demo
-split_decision_demo.mp4
-*.mp4
+# All run dirs ignored
+logs/runs/*
+
+# Un-ignore the two run dirs we want to keep
+!logs/runs/it14_mirror/
+!logs/runs/defender/
+
+# Within it14_mirror: exclude tensorboard / large checkpoints / bulk data
+logs/runs/it14_mirror/tb/
+logs/runs/it14_mirror/eval/
+logs/runs/it14_mirror/final.zip
+logs/runs/it14_mirror/config.json
+logs/runs/it14_mirror/analysis.json
+logs/runs/it14_mirror/eval_L1.json
+
+# Within viz/cases: keep only the summary PNG and 3 selected mp4s
+logs/runs/it14_mirror/viz/cases/feint_loss_block/
+logs/runs/it14_mirror/viz/cases/feint_loss_collision/
+logs/runs/it14_mirror/viz/cases/feint_loss_timeout/
+logs/runs/it14_mirror/viz/cases/nofeint_loss_collision/
+logs/runs/it14_mirror/viz/cases/nofeint_loss_oob/
+logs/runs/it14_mirror/viz/cases/nofeint_loss_timeout/
+logs/runs/it14_mirror/viz/cases/nofeint_win_A/
+logs/runs/it14_mirror/viz/cases/nofeint_win_B/
+logs/runs/it14_mirror/viz/cases/wrong_goal_False/
+logs/runs/it14_mirror/viz/cases/wrong_goal_True/
+logs/runs/it14_mirror/viz/cases/feint_win_A/feint_win_A_2_*
+logs/runs/it14_mirror/viz/cases/feint_win_B/feint_win_B_2_*
+logs/runs/it14_mirror/viz/cases/feint_loss_oob/feint_loss_oob_2_*
+
+# Within defender: keep only best/best_model.zip + viz/sanity_*.png
+!logs/runs/defender/def_v1/
+logs/runs/defender/def_v1/tb/
+logs/runs/defender/def_v1/eval/
+logs/runs/defender/def_v1/final.zip
+logs/runs/defender/def_v1/config.json
+
+# Miscellaneous standalone files we don't want
+logs/sanity_results.json
+
+# IsaacToM/ has its own nested .gitignore that handles its subtree
+# (smoke files, IsaacToM/logs/, *.mp4 in IsaacToM/).
