@@ -66,3 +66,8 @@ logs/sanity_results.json
 
 # IsaacToM/ has its own nested .gitignore that handles its subtree
 # (smoke files, IsaacToM/logs/, *.mp4 in IsaacToM/).
+
+# Generated demo
+split_decision_demo.mp4
+*.mp4
+notes.md
