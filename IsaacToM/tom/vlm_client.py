@@ -10,6 +10,7 @@ import base64
 import json
 import os
 import time
+import requests
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -107,17 +108,63 @@ class _OpenAIBackend:
 
 
 # ---------------------------------------------------------------------------
+
 class _QwenBackend:
-    """Stub for Qwen2-VL. Implement against the local HF model or Dashscope API
-    when we move off OpenAI. Contract must match _OpenAIBackend.query."""
+    """Local Ollama Qwen-VL backend. Contract matches _OpenAIBackend.query."""
 
     def __init__(self, model: str):
         self.model = model
-        # TODO: from transformers import Qwen2VLForConditionalGeneration, AutoProcessor
-        raise NotImplementedError("Qwen backend not wired yet — keep vlm_backend='openai'.")
+        self.url = os.environ.get("OLLAMA_URL", "http://XD-F6403-N10429:11434/api/generate")
 
-    def query(self, *args, **kwargs):
-        raise NotImplementedError
+    def query(self, system_prompt, user_prompt, image_paths, response_schema, temperature):
+        prompt = f"{system_prompt}\n\n{user_prompt}" if system_prompt else user_prompt
+
+        if response_schema is not None:
+            prompt += (
+                "\n\nReturn ONLY valid JSON conforming to this JSON schema:\n"
+                + json.dumps(response_schema, ensure_ascii=False)
+            )
+
+        payload = {
+            "model": self.model,
+            "prompt": prompt,
+            "images": [_encode_image(p) for p in image_paths],
+            "stream": False,
+            "options": {"temperature": temperature},
+        }
+
+        if response_schema is not None:
+            payload["format"] = "json"
+
+        for attempt in range(3):
+            try:
+                resp = requests.post(self.url, json=payload, timeout=120)
+                resp.raise_for_status()
+                break
+            except Exception:
+                if attempt == 2:
+                    raise
+                time.sleep(1.5 * (attempt + 1))
+
+        resp_json = resp.json()
+        debug_resp = {
+            "model": resp_json.get("model"),
+            "response": resp_json.get("response"),
+            "thinking": resp_json.get("thinking"),
+            "done": resp_json.get("done"),
+            "done_reason": resp_json.get("done_reason"),
+        }
+        print(f"[tom][ollama_response] {json.dumps(debug_resp, ensure_ascii=False)}", flush=True)
+        raw = resp_json.get("response") or resp_json.get("thinking") or "{}"
+        parsed = _safe_json_loads(raw)
+
+        return VLMResponse(
+            raw=raw,
+            parsed=parsed,
+            backend="qwen",
+            model=self.model,
+            usage={},
+        )
 
 
 def _safe_json_loads(s: str) -> Dict[str, Any]:
