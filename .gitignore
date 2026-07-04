@@ -1,0 +1,18 @@
+# virtual env / caches
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# training outputs (checkpoints are multi-GB; regenerate with `make smoke`)
+runs/
+
+# generated dataset (deterministic under seed 0; regenerate with `make data`)
+data/
+
+# HF model cache lives outside the repo (HF_HOME)
+hf_cache/
+
+# noisy orchestration log (the curated evidence is reports/smoke_report.md)
+reports/pipeline.log
+reports/.smoke_t0

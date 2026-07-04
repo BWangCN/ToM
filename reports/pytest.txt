@@ -1,0 +1,8 @@
+........                                                                 [100%]
+=============================== warnings summary ===============================
+tests/test_collator.py::test_mask_boundaries[A]
+tests/test_collator.py::test_mask_boundaries[B]
+  /root/deception-vla/.venv/lib/python3.12/site-packages/transformers/processing_utils.py:928: DeprecationWarning: __array__ implementation doesn't accept a copy keyword, so passing copy=False failed. __array__ must implement 'dtype' and 'copy' keyword arguments. To learn more, see the migration guide https://numpy.org/devdocs/numpy_2_0_migration_guide.html#adapting-to-changes-in-the-copy-keyword
+    tokenizer_input = np.array(tokenizer_input)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html

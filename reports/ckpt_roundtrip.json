@@ -1,0 +1,8 @@
+{
+ "probe_saved": 0.013026755303144455,
+ "probe_fresh_process": 0.012588031589984894,
+ "rel_err": 0.03367866386909564,
+ "probe_ok": true,
+ "merge_seconds": 0.2,
+ "merged_generation_well_formed": true
+}

@@ -1,0 +1,15 @@
+# Verified stack (2026-07-03, RTX 4080 Laptop 12 GB, CUDA driver 595.xx).
+# Exact pins for the packages whose APIs the code depends on; floors elsewhere.
+# On Linux, the default PyPI torch wheel ships with CUDA 12/13 runtime bundled.
+torch==2.12.1
+torchvision==0.27.1
+transformers==5.12.1
+peft==0.19.1
+accelerate>=1.0
+huggingface_hub>=0.30
+safetensors>=0.4
+numpy>=2.0
+pillow>=11.0
+matplotlib>=3.8
+pyyaml>=6.0
+pytest>=8.0

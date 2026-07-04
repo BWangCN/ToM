@@ -1,0 +1,279 @@
+{
+ "a": {
+  "malformed": 0,
+  "chunk_l2_mean": 1.9727,
+  "ms_per_step": 173.7,
+  "checkpoint": "default",
+  "pathway": "discrete argmax",
+  "perturb_shift_median": 2.671,
+  "rollout": {
+   "deceived_rate": 0.45,
+   "goal_rate": 0.0,
+   "ms_per_step": 188.7,
+   "malformed": 0
+  }
+ },
+ "b": {
+  "malformed": 0,
+  "chunk_l2_mean": 2.0234,
+  "ms_per_step": 197.9,
+  "checkpoint": "default",
+  "pathway": "flow, cond=think+act",
+  "perturb": {
+   "condition": "think_and_act",
+   "method": "causal-pathway swap: teacher-forced reasoning -> constrained greedy act generation -> flow decode (see module docstring)",
+   "n_samples": 8,
+   "n_seeds": 5,
+   "per_sample": [
+    {
+     "episode_id": "ep0200",
+     "decision": "HONEST_DIRECT",
+     "swap_from": "ep0201",
+     "swap_decision": "FEINT_LEFT_GO_RIGHT",
+     "acts_changed": false,
+     "noise": 0.2889,
+     "shift": 0.059054,
+     "ratio": 0.204,
+     "decoder_direct_noise": 0.21419,
+     "decoder_direct_shift": 0.089282,
+     "decoder_direct_ratio": 0.417
+    },
+    {
+     "episode_id": "ep0201",
+     "decision": "FEINT_LEFT_GO_RIGHT",
+     "swap_from": "ep0202",
+     "swap_decision": "FEINT_RIGHT_GO_LEFT",
+     "acts_changed": true,
+     "noise": 0.279679,
+     "shift": 2.79219,
+     "ratio": 9.984,
+     "decoder_direct_noise": 0.25112,
+     "decoder_direct_shift": 0.047039,
+     "decoder_direct_ratio": 0.187
+    },
+    {
+     "episode_id": "ep0202",
+     "decision": "FEINT_RIGHT_GO_LEFT",
+     "swap_from": "ep0203",
+     "swap_decision": "HESITATION_FAKE",
+     "acts_changed": true,
+     "noise": 0.27159,
+     "shift": 2.744037,
+     "ratio": 10.104,
+     "decoder_direct_noise": 0.267169,
+     "decoder_direct_shift": 0.035005,
+     "decoder_direct_ratio": 0.131
+    },
+    {
+     "episode_id": "ep0203",
+     "decision": "HESITATION_FAKE",
+     "swap_from": "ep0204",
+     "swap_decision": "HONEST_DIRECT",
+     "acts_changed": true,
+     "noise": 0.355699,
+     "shift": 1.798243,
+     "ratio": 5.056,
+     "decoder_direct_noise": 0.363121,
+     "decoder_direct_shift": 0.089196,
+     "decoder_direct_ratio": 0.246
+    },
+    {
+     "episode_id": "ep0204",
+     "decision": "HONEST_DIRECT",
+     "swap_from": "ep0205",
+     "swap_decision": "FEINT_LEFT_GO_RIGHT",
+     "acts_changed": true,
+     "noise": 0.269444,
+     "shift": 3.480563,
+     "ratio": 12.918,
+     "decoder_direct_noise": 0.287055,
+     "decoder_direct_shift": 0.018567,
+     "decoder_direct_ratio": 0.065
+    },
+    {
+     "episode_id": "ep0205",
+     "decision": "FEINT_LEFT_GO_RIGHT",
+     "swap_from": "ep0206",
+     "swap_decision": "FEINT_RIGHT_GO_LEFT",
+     "acts_changed": true,
+     "noise": 0.261459,
+     "shift": 5.029697,
+     "ratio": 19.237,
+     "decoder_direct_noise": 0.27116,
+     "decoder_direct_shift": 0.027577,
+     "decoder_direct_ratio": 0.102
+    },
+    {
+     "episode_id": "ep0206",
+     "decision": "FEINT_RIGHT_GO_LEFT",
+     "swap_from": "ep0207",
+     "swap_decision": "HESITATION_FAKE",
+     "acts_changed": true,
+     "noise": 0.277428,
+     "shift": 4.058486,
+     "ratio": 14.629,
+     "decoder_direct_noise": 0.264413,
+     "decoder_direct_shift": 0.025347,
+     "decoder_direct_ratio": 0.096
+    },
+    {
+     "episode_id": "ep0207",
+     "decision": "HESITATION_FAKE",
+     "swap_from": "ep0208",
+     "swap_decision": "HONEST_DIRECT",
+     "acts_changed": true,
+     "noise": 0.351093,
+     "shift": 1.973657,
+     "ratio": 5.621,
+     "decoder_direct_noise": 0.370076,
+     "decoder_direct_shift": 0.035057,
+     "decoder_direct_ratio": 0.095
+    }
+   ],
+   "median_ratio": 10.044,
+   "median_noise": 0.278554,
+   "median_shift": 2.768114,
+   "median_decoder_direct_ratio": 0.116,
+   "acts_changed_frac": 0.875,
+   "pass": true
+  },
+  "rollout": {
+   "deceived_rate": 0.4,
+   "goal_rate": 0.0,
+   "ms_per_step": 206.0,
+   "malformed": 0
+  }
+ },
+ "c": {
+  "malformed": 0,
+  "chunk_l2_mean": 2.3029,
+  "ms_per_step": 216.2,
+  "checkpoint": "think_only",
+  "pathway": "flow, cond=think",
+  "perturb": {
+   "condition": "think_only",
+   "method": "causal-pathway swap: teacher-forced reasoning -> constrained greedy act generation -> flow decode (see module docstring)",
+   "n_samples": 8,
+   "n_seeds": 5,
+   "per_sample": [
+    {
+     "episode_id": "ep0200",
+     "decision": "HONEST_DIRECT",
+     "swap_from": "ep0201",
+     "swap_decision": "FEINT_LEFT_GO_RIGHT",
+     "acts_changed": true,
+     "noise": 0.840075,
+     "shift": 2.919897,
+     "ratio": 3.476,
+     "decoder_direct_noise": 0.840075,
+     "decoder_direct_shift": 2.919897,
+     "decoder_direct_ratio": 3.476
+    },
+    {
+     "episode_id": "ep0201",
+     "decision": "FEINT_LEFT_GO_RIGHT",
+     "swap_from": "ep0202",
+     "swap_decision": "FEINT_RIGHT_GO_LEFT",
+     "acts_changed": false,
+     "noise": 0.828077,
+     "shift": 0.319517,
+     "ratio": 0.386,
+     "decoder_direct_noise": 0.828077,
+     "decoder_direct_shift": 0.319517,
+     "decoder_direct_ratio": 0.386
+    },
+    {
+     "episode_id": "ep0202",
+     "decision": "FEINT_RIGHT_GO_LEFT",
+     "swap_from": "ep0203",
+     "swap_decision": "HESITATION_FAKE",
+     "acts_changed": true,
+     "noise": 1.140995,
+     "shift": 2.184853,
+     "ratio": 1.915,
+     "decoder_direct_noise": 1.140995,
+     "decoder_direct_shift": 2.184853,
+     "decoder_direct_ratio": 1.915
+    },
+    {
+     "episode_id": "ep0203",
+     "decision": "HESITATION_FAKE",
+     "swap_from": "ep0204",
+     "swap_decision": "HONEST_DIRECT",
+     "acts_changed": true,
+     "noise": 0.694418,
+     "shift": 0.121706,
+     "ratio": 0.175,
+     "decoder_direct_noise": 0.694418,
+     "decoder_direct_shift": 0.121706,
+     "decoder_direct_ratio": 0.175
+    },
+    {
+     "episode_id": "ep0204",
+     "decision": "HONEST_DIRECT",
+     "swap_from": "ep0205",
+     "swap_decision": "FEINT_LEFT_GO_RIGHT",
+     "acts_changed": true,
+     "noise": 0.925184,
+     "shift": 2.012422,
+     "ratio": 2.175,
+     "decoder_direct_noise": 0.925184,
+     "decoder_direct_shift": 2.012422,
+     "decoder_direct_ratio": 2.175
+    },
+    {
+     "episode_id": "ep0205",
+     "decision": "FEINT_LEFT_GO_RIGHT",
+     "swap_from": "ep0206",
+     "swap_decision": "FEINT_RIGHT_GO_LEFT",
+     "acts_changed": true,
+     "noise": 1.136505,
+     "shift": 4.839771,
+     "ratio": 4.258,
+     "decoder_direct_noise": 1.136505,
+     "decoder_direct_shift": 4.839771,
+     "decoder_direct_ratio": 4.258
+    },
+    {
+     "episode_id": "ep0206",
+     "decision": "FEINT_RIGHT_GO_LEFT",
+     "swap_from": "ep0207",
+     "swap_decision": "HESITATION_FAKE",
+     "acts_changed": true,
+     "noise": 0.258365,
+     "shift": 3.806692,
+     "ratio": 14.734,
+     "decoder_direct_noise": 0.258365,
+     "decoder_direct_shift": 3.806692,
+     "decoder_direct_ratio": 14.734
+    },
+    {
+     "episode_id": "ep0207",
+     "decision": "HESITATION_FAKE",
+     "swap_from": "ep0208",
+     "swap_decision": "HONEST_DIRECT",
+     "acts_changed": true,
+     "noise": 0.731123,
+     "shift": 0.811907,
+     "ratio": 1.11,
+     "decoder_direct_noise": 0.731123,
+     "decoder_direct_shift": 0.811907,
+     "decoder_direct_ratio": 1.11
+    }
+   ],
+   "median_ratio": 2.045,
+   "median_noise": 0.834076,
+   "median_shift": 2.098637,
+   "median_decoder_direct_ratio": 2.045,
+   "acts_changed_frac": 0.875,
+   "pass": false
+  },
+  "emit_false_ms_per_step": 157.2,
+  "rollout": {
+   "deceived_rate": 0.65,
+   "goal_rate": 0.0,
+   "ms_per_step": 210.5,
+   "malformed": 0
+  }
+ }
+}

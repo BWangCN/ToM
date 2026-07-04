@@ -1,0 +1,6 @@
+generated 220 samples -> data/toy  DATA_HASH=72aab52a7b5ae163
+determinism check PASS (regenerated hash 72aab52a7b5ae163)
+deceived rate over deceptive decisions: 0.99
+train.jsonl: 200 samples OK
+val.jsonl: 20 samples OK
+VALIDATOR PASS (220 samples)

@@ -1,0 +1,29 @@
+{
+ "stage": "B",
+ "tag": "stage_b",
+ "condition": "think_and_act",
+ "steps": 125,
+ "micro_steps": 1000,
+ "stop_reason": "criteria_met",
+ "init_losses": {
+  "reason_ce": 4.644552648067474,
+  "act_ce": 2.017089109867811,
+  "flow_mse": 0.5276377181289718,
+  "total": 7.189279556274414
+ },
+ "final_losses": {
+  "reason_ce": 4.3012505329897976e-05,
+  "act_ce": 0.0005396226006268989,
+  "flow_mse": 0.033736559096723795,
+  "total": 0.03431919403374195
+ },
+ "final_probes": null,
+ "criteria_met": true,
+ "greedy_match": 10,
+ "peak_vram_gb": 11.33,
+ "wall_min": 20.8,
+ "mean_step_s": 9.64,
+ "precision": "bf16",
+ "n_frames": 4,
+ "resumed": false
+}

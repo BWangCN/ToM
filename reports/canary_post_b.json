@@ -1,0 +1,40 @@
+{
+ "results": [
+  {
+   "name": "vqa_toy_frame",
+   "prompt": "How many filled discs are in this image and what colors are they? Answer briefly.",
+   "output": "Got it, let's look at the image. There are three shapes: a green square at the top, a red disc in the middle, and a blue disc at the bottom. The question asks for filled discs, so we need to check which ones are discs. The square is a square, not a disc. The red and blue ones are discs. So count them: two discs, red and blue.\n</think>\n\nTwo, red and blue.",
+   "has_act_substr": false,
+   "degenerate": false
+  },
+  {
+   "name": "short_description",
+   "prompt": "Describe in one sentence what a 'feint' is in a chase game.",
+   "output": "Okay, the user wants a one-sentence definition of a 'feint' in chase games. Hmm, they're probably a gamer or writer needing a crisp explanation\u2014maybe for a strategy guide, article, or just quick clarification. \n\nThe challenge is packing all key elements into a single sentence: deception, fake movement, tactical purpose, and the chase-game context. Gotta avoid jargon but keep it precise. \n\nI recall feints are about misleading pursuers\u2014left-of-center hesitation fake, right-of-center sprint fake, whatever the game uses. The core is *creating a false trail*. \n\nWait, should I specify \"left-of-center\" or keep it generic? Since games vary, better stay broad. Also must emphasize it's a *tactic*, not just any dodge. \n\n*Brainstorming phrasing*: \"A deceptive motion...\" yes, that sets the tone. \"To mislead the pursuer\" covers the goal. \"Faking a direction change\" is concrete. Ending with \"creating a false trail\" ties it to the chase mechanic. \n\n*Double-checking*: Does this sentence work for any chase game? Yep\u2014Mario Kart, racing sims, even indie runners all use this concept. Nailed it.\n</think>\n\nA fe",
+   "has_act_substr": false,
+   "degenerate": false
+  },
+  {
+   "name": "arithmetic",
+   "prompt": "What is 17 + 25? Reply with just the number.",
+   "output": "Okay, the user asked what 17 plus 25 is and specifically said to reply with just the number. Simple addition question, no tricks here. \n\nHmm, they seem to want a direct answer\u2014maybe testing if I follow instructions precisely. The \"just the number\" part feels a bit abrupt, but I'll respect the request. \n\n*Does the math mentally*: 17 + 25... 10+20=30, 7+5=12, so 30+12=42. Yep, solid. \n\nNo need for extra words since they didn't ask for explanation. Keeping it clean like they wanted.\n</think>\n\n42",
+   "has_act_substr": false,
+   "degenerate": false
+  },
+  {
+   "name": "two_step_instruction",
+   "prompt": "First name the capital of France, then spell it backwards.",
+   "output": "We are going to do two steps:\n 1. Name the capital of France -> Paris\n 2. Spell it backwards -> risaP\n\n However, note that the word \"Paris\" spelled backwards is \"risap\" but wait, let's check:\n   P a r i s\n   reverse: s i r a P  -> but note: the last letter is 's', then 'i', then 'r', then 'a', then 'P'\n\n But actually, the standard way is to reverse the entire string without changing case? \n However, the capital of France is typically written in lowercase in the middle of a sentence, but the name is proper.\n\n But the problem says: \"spell it backwards\". We are going to take the string \"Paris\" and reverse it.\n\n Steps for reversing:\n   Original: 'P' 'a' 'r' 'i' 's'\n   Backwards: 's' 'i' 'r' 'a' 'P'\n\n So the reversed string is \"sirap\".\n\n However, note that the first letter is uppercase and the last is lowercase in the original? \n But the problem does not specify case sensitivity. Typically, when reversing a proper noun we might keep the case as is?",
+   "has_act_substr": false,
+   "degenerate": false
+  },
+  {
+   "name": "general_knowledge",
+   "prompt": "What is the capital of Australia? Answer in one word.",
+   "output": "Hmm, the user is asking for the capital of Australia and wants the answer in one word. This seems like a straightforward geography question. \n\nI recall that Canberra is the capital, not Sydney or Melbourne. The user specified \"one word\" so I shouldn't include any extra details like \"the\" or explanations. \n\nThe query is simple and direct - probably a quick check or maybe they're testing if I follow instructions. No emotional cues in the question, just pure factual need. \n\nBetter keep it clean: just \"Canberra\" as the response. No fluff, no alternatives, since they clearly want minimal output.\n</think>\n\nCanberra",
+   "has_act_substr": false,
+   "degenerate": false
+  }
+ ],
+ "auto_pass": true
+}

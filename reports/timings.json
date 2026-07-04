@@ -1,0 +1,42 @@
+{
+  "data_gen": {
+    "seconds": 1.3,
+    "n": 220,
+    "hash": "72aab52a7b5ae163"
+  },
+  "canary_canary_pre_a": {
+    "seconds": 98.7
+  },
+  "train_stage_a": {
+    "seconds": 1686.7,
+    "steps": 258
+  },
+  "canary_canary_post_a": {
+    "seconds": 87.3
+  },
+  "train_stage_b": {
+    "seconds": 1246.9,
+    "steps": 125
+  },
+  "canary_canary_post_b": {
+    "seconds": 91.2
+  },
+  "train_stage_b_resume": {
+    "seconds": 65.8,
+    "steps": 25
+  },
+  "train_stage_b_thinkonly": {
+    "seconds": 571.0,
+    "steps": 50
+  },
+  "ablation_eval": {
+    "seconds": 725.3
+  },
+  "eval_smoke": {
+    "seconds": 41.3
+  },
+  "smoke_total": {
+    "seconds": 5130,
+    "note": "wall incl. one WSL VM idle-shutdown interruption mid-run; per-step compute walls are the other entries"
+  }
+}

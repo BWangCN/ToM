@@ -1,0 +1,102 @@
+# Deception-VLA cluster config — mirrors laptop.yaml; cluster-only fields are
+# present but UNTESTED (CLAUDE.md §9: nothing here has been verified on this
+# machine — no multi-GPU, no throughput numbers, no real-training hparams).
+
+seed: 0
+
+model:
+  name_or_path: Qwen/Qwen3-VL-4B-Thinking
+  precision: bf16
+  attn_implementation: sdpa        # UNTESTED on cluster: flash_attention_2 may be enabled there
+  freeze_vision: true
+
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+
+action:
+  dim: 2
+  chunk_len: 8
+  control_hz: 10
+  bins: 128
+
+decoder:
+  d_model: 512
+  depth: 8
+  n_heads: 8
+  mlp_ratio: 4
+  detach_condition: true
+  condition: think_and_act
+  emit_discrete_at_inference: true
+  euler_steps: 10
+
+inputs:
+  n_frames: 4
+  image_size: 256
+  max_pixels_per_frame: 1048576
+
+losses:
+  lambda_reason: 1.0
+  lambda_act_ce: 1.0
+  lambda_flow: 1.0
+
+optim:
+  lora_lr: 1.0e-4
+  token_lr: 1.0e-4
+  decoder_lr: 3.0e-4
+  decoder_inner_steps: 8           # UNTESTED at cluster scale: retune (see laptop.yaml note)
+  decoder_inner_bs: 8              # UNTESTED
+  weight_decay: 0.0
+  warmup_steps: 20                 # UNTESTED: retune for real dataset size
+  schedule: cosine
+  micro_batch: 1                   # UNTESTED: raise on cluster GPUs
+  grad_accum: 8                    # UNTESTED: retune with micro_batch
+  grad_checkpointing: true
+  max_grad_norm: 1.0
+
+data:
+  root: data/toy                   # UNTESTED: point at the real dataset
+  n_train: 200                     # UNTESTED
+  n_val: 20                        # UNTESTED
+
+train:
+  reasoning_max_new_tokens: 256
+  wall_clock_limit_min: 100000     # UNTESTED: no laptop wall-clock guard on cluster
+
+# ---- cluster-only fields (ALL UNTESTED, placeholders for the collaborators) ----
+cluster:
+  num_gpus: 8                      # UNTESTED
+  strategy: fsdp                   # UNTESTED (fsdp | deepspeed | ddp)
+  fsdp_config: {}                  # UNTESTED
+  deepspeed_config: null           # UNTESTED
+  nccl_timeout_min: 30             # UNTESTED
+  stage_c:                         # UNTESTED — GRPO post-training (VLM token pathway
+    enabled: false                 #   only; decoder frozen, AR1 precedent)
+    group_size: 8                  # UNTESTED
+    kl_coef: 0.0                   # UNTESTED
+    rewards: [reasoning_quality, consistency, outcome_reward]  # stubs in src/dvla/rewards.py
+  fast_tokenizer: false            # future option, do not implement (CLAUDE.md §2.2)
+
+stage_a:
+  n_samples: -1                    # UNTESTED: full dataset on cluster
+  max_opt_steps: -1                # UNTESTED
+  target_act_ce: 0.05
+  target_flow_frac: 0.10
+
+stage_b:
+  n_samples: -1                    # UNTESTED
+  sample_offset: 0                 # UNTESTED (laptop smoke uses 32 for disjointness)
+  max_opt_steps: -1                # UNTESTED
+  target_loss_drop: 0.90
+  target_greedy_match: 9
+  greedy_check_every: 25
+
+eval:
+  perturb_n_samples: 8
+  perturb_n_seeds: 5
+  perturb_pass_ratio: 3.0
+  ablation_val_n: 20
+  ablation_rollouts: 20
+  gen_demo_n: 3

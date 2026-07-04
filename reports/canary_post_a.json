@@ -1,0 +1,40 @@
+{
+ "results": [
+  {
+   "name": "vqa_toy_frame",
+   "prompt": "How many filled discs are in this image and what colors are they? Answer briefly.",
+   "output": "Got it, let's look at the image. There's a green square, then a red disc, then a blue disc. The question is about filled discs. So discs are the circular shapes. The red and blue ones are discs. Green is a square, so not a disc. So how many filled discs? Two. Colors are red and blue.\n</think> Two, red and blue",
+   "has_act_substr": false,
+   "degenerate": false
+  },
+  {
+   "name": "short_description",
+   "prompt": "Describe in one sentence what a 'feint' is in a chase game.",
+   "output": "Hmm, the user wants me to describe what a 'feint' is in a chase game in just one sentence. This seems straightforward but I need to be precise since it's for a specific context.\n\nI recall that in chase games like racing or action games, a feint is a tactical move where a player pretends to do something to distract the opponent. It's not actually going to happen\u2014it's a bluff to make the enemy think they're being chased in a different direction.\n\nThe user might be a gamer who's encountered this term and wants a quick definition, or perhaps they're learning about game strategies. They specified \"one sentence,\" so they probably want something concise and easy to remember, without extra fluff.\n\nI should make sure my response captures the essence: deception, distraction, and the purpose of confusing the pursuer. I'll avoid jargon to keep it accessible. Something like \"A feint is a deceptive maneuver where a player pretends to move in one direction to lure the pursuer away from their actual path.\"\n\nThat covers it in one smooth sentence. I'll go with that to stay helpful and accurate.\n</think>",
+   "has_act_substr": false,
+   "degenerate": false
+  },
+  {
+   "name": "arithmetic",
+   "prompt": "What is 17 + 25? Reply with just the number.",
+   "output": "Okay, the user asked what 17 plus 25 is and wants just the number as the reply. Let me make sure I add those correctly. 17 plus 25... 10 plus 20 is 30, and 7 plus 5 is 12, so 30 plus 12 is 42. Yeah, that's right. No need for any extra words since they specified to reply with just the number. Keeping it simple and accurate.\n</think>42",
+   "has_act_substr": false,
+   "degenerate": false
+  },
+  {
+   "name": "two_step_instruction",
+   "prompt": "First name the capital of France, then spell it backwards.",
+   "output": "Okay, the user wants me to name the capital of France and then spell it backwards. That seems straightforward, but let me think carefully.\n\nFirst, I know the capital of France is Paris. That's basic geography knowledge. No controversy there. \n\nNow for the tricky part: spelling it backwards. Paris spelled backwards would be \"sirap\". Wait, let me double-check that. P-A-R-I-S reversed is S-I-R-A-P. Yes, that's correct. \n\nHmm, I wonder if the user is testing me or just wants a quick answer. Maybe they're practicing English or French? Or perhaps they're bored and want a silly challenge. \n\nI should make sure I'm precise. Some might think \"Paris\" has accents but the standard spelling without accents is P-A-R-I-S. And reversing that gives S-I-R-A-P. \n\nOh! Important point - in French it's \"Paris\" with an accent but the question says \"spell it backwards\" so I think we should use the English spelling. The user didn't specify language version. \n\nBetter keep it simple: capital is Paris, backwards is sirap. Though I recall some people might write it as \"sirap\" with lowercase s since it's reversed. \n\nWait",
+   "has_act_substr": false,
+   "degenerate": false
+  },
+  {
+   "name": "general_knowledge",
+   "prompt": "What is the capital of Australia? Answer in one word.",
+   "output": "Hmm, the user is asking about the capital of Australia and wants the answer in one word. This seems straightforward\u2014they're probably testing basic geography knowledge or need a quick fact for something like trivia.  \n\nI recall Canberra is Australia's capital, chosen as a compromise between Sydney and Melbourne to avoid favoring one city. The user specified \"one word,\" so I'll skip any extra details like \"Canberra\" being a planned city.  \n\nNo signs of frustration or urgency in the query, so they likely just want efficiency. I'll respond directly to match their request\u2014no fluff, just the word.  \n\n...Though part of me wonders if they're checking if I'll overcomplicate it. But since they said \"one word,\" better keep it clean.\n</think> Canberra",
+   "has_act_substr": false,
+   "degenerate": false
+  }
+ ],
+ "auto_pass": true
+}

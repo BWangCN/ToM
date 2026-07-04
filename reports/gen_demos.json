@@ -1,0 +1,36 @@
+{
+ "demos": [
+  {
+   "episode_id": "ep0200",
+   "decision": "HONEST_DIRECT",
+   "well_formed": true,
+   "n_bins": 16,
+   "flow_l2_vs_gt": 0.2447,
+   "discrete_l2_vs_gt": 0.0513,
+   "generated_text": "B tracks me with a ~3-step lag but he is left-of-center and the right corridor is open. I take the direct route on the right side. Decision: honest direct.\n</think>\n\n<|act_start|><|act_123|><|act_92|><|act_120|><|act_92|><|act_109|><|act_92|><|act_100|><|act_92|><|act_93|><|act_92|><|act_87|><|act_92|><|act_82|><|act_92|><|act_79|><|act_92|><|act_end|>",
+   "plot": "gen_demo_ep0200.png"
+  },
+  {
+   "episode_id": "ep0201",
+   "decision": "FEINT_LEFT_GO_RIGHT",
+   "well_formed": true,
+   "n_bins": 16,
+   "flow_l2_vs_gt": 5.1256,
+   "discrete_l2_vs_gt": 5.2448,
+   "generated_text": "Because B lags my motion by roughly 3 steps, a right feint now makes him drift right while I swing left around him (0.16 away, left-of-center). Decision: feint right, then go left.\n</think>\n\n<|act_start|><|act_121|><|act_80|><|act_121|><|act_80|><|act_121|><|act_80|><|act_121|><|act_80|><|act_0|><|act_92|><|act_0|><|act_92|><|act_0|><|act_92|><|act_0|><|act_92|><|act_end|>",
+   "plot": "gen_demo_ep0201.png"
+  },
+  {
+   "episode_id": "ep0202",
+   "decision": "FEINT_RIGHT_GO_LEFT",
+   "well_formed": true,
+   "n_bins": 16,
+   "flow_l2_vs_gt": 0.1802,
+   "discrete_l2_vs_gt": 0.1038,
+   "generated_text": "Because B lags my motion by roughly 3 steps, a right feint now makes him drift right while I swing left around him (0.16 away, left-of-center). Decision: feint right, then go left.\n</think>\n\n<|act_start|><|act_118|><|act_80|><|act_118|><|act_80|><|act_118|><|act_80|><|act_118|><|act_80|><|act_3|><|act_92|><|act_3|><|act_92|><|act_3|><|act_92|><|act_3|><|act_92|><|act_end|>",
+   "plot": "gen_demo_ep0202.png"
+  }
+ ],
+ "all_well_formed": true,
+ "forced_act_start": 0
+}

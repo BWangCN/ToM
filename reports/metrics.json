@@ -1,0 +1,18 @@
+{
+  "trainable_breakdown": {
+    "lora": 33030144,
+    "token_rows": 332800,
+    "other": 0,
+    "decoder": 54761474,
+    "total_trainable": 88124418,
+    "decoder_exact": 54761474,
+    "tied": true,
+    "peft_fallback": false
+  },
+  "stage_a_first_step_vram_gb": 10.51,
+  "stage_b_first_step_vram_gb": 10.53,
+  "stage_b_resume_first_step_vram_gb": 11.19,
+  "stage_b_thinkonly_first_step_vram_gb": 10.53,
+  "perturb_median_ratio": 10.044,
+  "eval_smoke_peak_vram_gb": 10.24
+}

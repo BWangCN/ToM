@@ -1,0 +1,92 @@
+# Deception-VLA laptop config — single source of truth mirrors CLAUDE.md §0.
+# Any runtime deviation is appended to reports/deviations.md and folded into the report.
+
+seed: 0
+
+model:
+  name_or_path: Qwen/Qwen3-VL-4B-Thinking
+  precision: bf16                  # bf16 | nf4  (nf4 = fallback chain step 2)
+  attn_implementation: sdpa        # hard rule: never flash-attn
+  freeze_vision: true
+
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]  # LM only
+
+action:
+  dim: 2                           # (dx, dy) per control step, normalized [-1, 1]
+  chunk_len: 8                     # H
+  control_hz: 10
+  bins: 128                        # shared codebook across dims -> 16 tokens per chunk
+
+decoder:
+  d_model: 512
+  depth: 8
+  n_heads: 8
+  mlp_ratio: 4
+  detach_condition: true           # knowledge insulation (pi0.5-KI)
+  condition: think_and_act         # think_and_act (AR1 default) | think_only (ablation arm c)
+  emit_discrete_at_inference: true # false legal ONLY with condition=think_only
+  euler_steps: 10
+
+inputs:
+  n_frames: 4                      # fallback chain step 1 -> 2
+  image_size: 256
+  max_pixels_per_frame: 1048576    # cap so visual tokens <= ~1024/frame
+
+losses:
+  lambda_reason: 1.0
+  lambda_act_ce: 1.0
+  lambda_flow: 1.0
+
+optim:
+  lora_lr: 1.0e-4
+  token_lr: 1.0e-4
+  decoder_lr: 3.0e-4
+  # Decoder-only inner-loop: N extra flow steps per optimizer step, on cached
+  # DETACHED conditioning (knowledge insulation unchanged). The from-scratch
+  # 55M DiT needs ~10x more updates than 300 backbone smoke steps provide
+  # (verified by scripts/diag_decoder_fit.py). Recorded as a deviation.
+  decoder_inner_steps: 8
+  decoder_inner_bs: 8
+  weight_decay: 0.0
+  warmup_steps: 20                 # optimizer steps
+  schedule: cosine
+  micro_batch: 1
+  grad_accum: 8
+  grad_checkpointing: true
+  max_grad_norm: 1.0
+
+data:
+  root: data/toy
+  n_train: 200
+  n_val: 20
+
+train:
+  reasoning_max_new_tokens: 256    # fallback chain step 3 -> 128
+  wall_clock_limit_min: 28         # hard stop below the 30-min rule
+
+stage_a:
+  n_samples: 32
+  max_opt_steps: 300
+  target_act_ce: 0.05
+  target_flow_frac: 0.10           # flow MSE <= 10% of its initial value
+
+stage_b:
+  n_samples: 10
+  sample_offset: 32                # disjoint from Stage A's 32 samples, so the
+                                   # 90%-drop criteria start from untrained values
+  max_opt_steps: 300
+  target_loss_drop: 0.90           # all three losses drop >= 90% from init
+  target_greedy_match: 9           # greedy decode reproduces GT act tokens on >= 9/10
+  greedy_check_every: 25           # opt steps
+
+eval:
+  perturb_n_samples: 8
+  perturb_n_seeds: 5
+  perturb_pass_ratio: 3.0
+  ablation_val_n: 20
+  ablation_rollouts: 20
+  gen_demo_n: 3

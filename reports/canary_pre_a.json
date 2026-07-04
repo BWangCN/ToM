@@ -1,0 +1,40 @@
+{
+ "results": [
+  {
+   "name": "vqa_toy_frame",
+   "prompt": "How many filled discs are in this image and what colors are they? Answer briefly.",
+   "output": "Got it, let's look at the image. There's a green square at the top, then a red circle, and a blue circle. The question is about filled discs. Discs are circles, right? So the red and blue ones are circles (discs). The green is a square, not a disc. So how many filled discs? Two. Colors are red and blue.\n</think>\n\nTwo filled discs: red and blue.",
+   "has_act_substr": false,
+   "degenerate": false
+  },
+  {
+   "name": "short_description",
+   "prompt": "Describe in one sentence what a 'feint' is in a chase game.",
+   "output": "Okay, the user wants a one-sentence definition of a 'feint' in a chase game. Let me start by recalling what a feint is in gaming contexts. From what I know, a feint is a deceptive move to mislead the opponent. In chase games, like racing or pursuit scenarios, players often use feints to trick the pursuer.\n\nHmm, the user might be a gamer looking to understand game mechanics, maybe for strategy or to improve their play. They need a concise definition, so I should keep it to one sentence as requested. But why one sentence? Maybe they want something quick to reference, like for a wiki entry or a quick tip.\n\nI should focus on the key elements: deception, misleading the pursuer, and the purpose of confusing them. Also, in chase games, the feint is usually a fake move to make the pursuer think they're close, but actually, the player is moving away. \n\nWait, is there a specific term used in chase games? Like in racing games, a feint might be a sudden direction change to avoid capture. But the core idea is deception. I need to make sure the definition is clear without jargon. \n\nThe user might not just want the definition; they might be",
+   "has_act_substr": false,
+   "degenerate": false
+  },
+  {
+   "name": "arithmetic",
+   "prompt": "What is 17 + 25? Reply with just the number.",
+   "output": "Okay, the user asked for 17 plus 25 and wants just the number as the reply. Let me make sure I add those correctly. 17 plus 25... 10 plus 20 is 30, and 7 plus 5 is 12, so 30 plus 12 is 42. Yeah, that's right. I should just give the answer without any extra stuff since they specified \"just the number.\" No need for explanations or anything else. Let me double-check: 17 + 25. 17 + 20 is 37, plus 5 more is 42. Yep, definitely 42. Alright, time to reply with just 42.\n</think>\n\n42",
+   "has_act_substr": false,
+   "degenerate": false
+  },
+  {
+   "name": "two_step_instruction",
+   "prompt": "First name the capital of France, then spell it backwards.",
+   "output": "We are going to do two steps:\n 1. Name the capital of France: Paris.\n 2. Spell it backwards: reverse the string \"Paris\".\n\n Step 1: The capital of France is Paris.\n Step 2: Reverse the string \"Paris\":\n   Original: P a r i s\n   Backwards: s i r a P\n\n However, note that in the reversed string, the first letter becomes the last and so on.\n So, \"Paris\" reversed is \"sirap\".\n\n But wait, let's write it:\n   P -> 1st letter -> becomes last: 5th\n   a -> 2nd -> becomes 4th\n   r -> 3rd -> becomes 3rd\n   i -> 4th -> becomes 2nd\n   s -> 5th -> becomes 1st\n\n So the reversed string is: s (from the last) + i (from the 4th) + r (from the 3rd) + a (from the 2nd) + P (from the 1st) -> \"sirap\"\n\n However, note that the original string is \"Paris\" (with capital P at the beginning). When we reverse, the last letter (s",
+   "has_act_substr": false,
+   "degenerate": false
+  },
+  {
+   "name": "general_knowledge",
+   "prompt": "What is the capital of Australia? Answer in one word.",
+   "output": "Hmm, the user is asking for the capital of Australia and wants the answer in one word. This seems straightforward, but I should double-check to avoid any mistakes.\n\nI know that Australia's capital is Canberra. It's not Sydney, Melbourne, or any other major city, because the Australian government deliberately chose Canberra as the capital to avoid favoring any one region. \n\nThe user specified \"one word,\" so I need to make sure my response is concise. \"Canberra\" is a single word, so that fits perfectly. \n\nI wonder why the user is asking this. Maybe they're testing my knowledge, or perhaps they're a student working on a geography quiz. Either way, keeping it simple and accurate is key. \n\nNo need for extra details since they just want the capital name. I'll go with \"Canberra\" as the answer.\n</think>\n\nCanberra",
+   "has_act_substr": false,
+   "degenerate": false
+  }
+ ],
+ "auto_pass": true
+}

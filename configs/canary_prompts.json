@@ -1,0 +1,28 @@
+[
+  {
+    "name": "vqa_toy_frame",
+    "type": "vqa",
+    "image_dir": "frames/ep0000",
+    "prompt": "How many filled discs are in this image and what colors are they? Answer briefly."
+  },
+  {
+    "name": "short_description",
+    "type": "text",
+    "prompt": "Describe in one sentence what a 'feint' is in a chase game."
+  },
+  {
+    "name": "arithmetic",
+    "type": "text",
+    "prompt": "What is 17 + 25? Reply with just the number."
+  },
+  {
+    "name": "two_step_instruction",
+    "type": "text",
+    "prompt": "First name the capital of France, then spell it backwards."
+  },
+  {
+    "name": "general_knowledge",
+    "type": "text",
+    "prompt": "What is the capital of Australia? Answer in one word."
+  }
+]
